@@ -1,9 +1,4 @@
-/**
- * This is a sample test suite.
- * Replace this with your implementation.
- */
-
-import { DNAToCodon, DNA } from './dna.js'
+import { DNAToCodon, DNA, BasePairToBinary } from './dna.js'
 
 describe('DNA', function () {
   describe('DNA', function () {
@@ -23,6 +18,29 @@ describe('DNA', function () {
       const dna = 'ATCA'.split('') as DNA;
       const codons = DNAToCodon(dna);
       expect(codons).toEqual(['ATC','AAA'])
+    })
+  })
+
+  describe(BasePairToBinary, function () {
+    it('A => 00', function () {
+      const base = 'A'
+      const binary = BasePairToBinary(base)
+      expect(binary).toEqual('00')
+    })
+    it('T => 11', function () {
+      const base = 'T'
+      const binary = BasePairToBinary(base)
+      expect(binary).toEqual('11')
+    })
+    it('C => 01', function () {
+      const base = 'C'
+      const binary = BasePairToBinary(base)
+      expect(binary).toEqual('01')
+    })
+    it('G => 10', function () {
+      const base = 'G'
+      const binary = BasePairToBinary(base)
+      expect(binary).toEqual('10')
     })
   })
 })
