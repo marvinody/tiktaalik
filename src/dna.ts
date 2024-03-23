@@ -1,25 +1,30 @@
-export type BasePair = 'A' | 'T' | 'C' | 'G';
+export type BasePair = 'A' | 'T' | 'C' | 'G'
 
-export type DNA = BasePair[];
+export type DNA = BasePair[]
 
-// define codon as 3 length string, not array 
-export type Codon = `${BasePair}${BasePair}${BasePair}`;
+export type Codon = `${BasePair}${BasePair}${BasePair}`
 
 export const DNAToCodon = (dna: DNA): Codon[] => {
-  const codons: Codon[] = [];
+  const codons: Codon[] = []
   for (let i = 0; i < dna.length; i += 3) {
-    codons.push(dna.slice(i, i + 3).join('') as Codon);
+    const triplet = dna.slice(i, i + 3)
+    if (triplet.length < 3) {
+      const last = triplet[triplet.length - 1]
+
+      triplet.push(last.toString().repeat(3 - triplet.length) as BasePair)
+    }
+
+    codons.push(triplet.join('') as Codon)
   }
-  return codons;
+  return codons
 }
 
 export type IntepreterKey = 'PDP8' | 'BRAINFUCK'
 
 export interface IInterpretableLife<E> {
-  aminoAcids: E[];
+  aminoAcids: E[]
   interpreter: IntepreterKey
-  
-  codonToAminoAcids(codons: Codon[]): E[] 
-  run(timeout: number): number
 
+  codonToAminoAcids(codons: Codon[]): E[]
+  run(timeout: number): number
 }
