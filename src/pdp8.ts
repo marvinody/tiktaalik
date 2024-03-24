@@ -1,4 +1,4 @@
-import { BasePair, BasePairToBinary, Codon, CodonToBasePair } from './dna'
+import { BasePair, BasePairToBinary, Codon, CodonToBasePair } from './dna.js'
 
 type BaseOps = 'AND' | 'TAD' | 'ISZ' | 'DCA' | 'JMS' | 'JMP' | 'OPR'
 type IZ = {
@@ -49,7 +49,7 @@ export const codonPairTo7Bit = (codon1: Codon, codon2: Codon): number => {
   return num8 >> 1;
 }
 
-const codonToBaseOp = (codon: Codon): BaseOps => {
+export const codonToBaseOp = (codon: Codon): BaseOps => {
   switch (codon) {
     case 'AAA':
     case 'AAC':
@@ -95,7 +95,7 @@ const codonToBaseOp = (codon: Codon): BaseOps => {
   }
 }
 
-const codonToPdp8Text = (codons: Codon[]): string => {
+export const codonToPdp8Text = (codons: Codon[]): string => {
   let i = 0
   while (i < codons.length) {
     i++
