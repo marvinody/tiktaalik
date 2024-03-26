@@ -4,17 +4,36 @@ export type DNA = BasePair[]
 
 export type Codon = `${BasePair}${BasePair}${BasePair}`
 
-export const BasePairToBinary = (base: BasePair): string => {
-  switch (base) {
-    case 'A':
-      return '00'
-    case 'T':
-      return '11'
-    case 'C':
-      return '01'
-    case 'G':
-      return '10'
+const BasePairToBinaryMapping: { [key in BasePair]: number } = {
+  'A': 0b00,
+  'C': 0b01,
+  'G': 0b10,
+  'T': 0b11,
+}
+
+// autogenerate the reverse mapping in case we want to swap later
+const ReverseBasePairToBinaryMapping: { [key: number]: BasePair } = Object.entries(BasePairToBinaryMapping).reduce((acc, [key, value]) => {
+  acc[value] = key as BasePair
+  return acc
+}, {} as { [key: number]: BasePair })
+
+export const BinaryToBasePair = (binary: number, basePairLength: number): BasePair[] => {
+  const basePairs: BasePair[] = []
+  for (let i = 0; i < basePairLength; i++) {
+    const base = (binary >> (i * 2)) & 0b11
+    basePairs.push(ReverseBasePairToBinaryMapping[base])
   }
+  return basePairs.reverse()
+}
+
+export const BasePairToBinary = (base: BasePair): string => {
+  return BasePairToBinaryMapping[base].toString(2).padStart(2, '0')
+}
+
+export const CodonsToBinary = (codons: Codon[]): string => {
+  return codons.map((codon) => {
+    return codon.split('').map((base: string) => BasePairToBinary(base as BasePair)).join('')
+  }).join('')
 }
 
 export const CodonToBasePair = (codon: Codon): BasePair[] => {
