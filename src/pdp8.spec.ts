@@ -1,5 +1,5 @@
 import { Codon } from './dna.js'
-import { OpToCodonLength, codonPairTo7Bit, codonToIZ} from './pdp8.js'
+import { OpToCodonLength, codonPairTo7Bit, codonToIZ, codonsToPdp8Text} from './pdp8.js'
 
 describe('PDP8', function () {
   describe(codonToIZ, function () {
@@ -90,4 +90,43 @@ describe('PDP8', function () {
     })
 
   })
+
+  describe(codonsToPdp8Text, function () {
+    it('should convert codon to PDP8 text', function () {
+      const codon: Codon[] = [
+        'AAA',
+        'AAA',
+        'AAA',
+      ]
+      const text = codonsToPdp8Text(codon)
+      expect(text).toEqual('AND     0')
+    })
+    it('should convert codon to PDP8 text', function () {
+      const codon: Codon[] = [
+        'ATC',
+        'TTT',
+        'TAA',
+      ]
+      const text = codonsToPdp8Text(codon)
+      expect(text).toEqual('TAD I Z 127')
+    })
+    it('should convert codon to PDP8 text', function () {
+      const codon: Codon[] = [
+        'ACT',
+        'TAT',
+        'TAA',
+      ]
+      const text = codonsToPdp8Text(codon)
+      expect(text).toEqual('ISZ   Z 103')
+    })
+    it('should convert codon to PDP8 text', function () {
+      const codon: Codon[] = [
+        'AGG',
+        'CCC',
+        'GAA',
+      ]
+      const text = codonsToPdp8Text(codon)
+      expect(text).toEqual('DCA I   43')
+    })
+  });
 })

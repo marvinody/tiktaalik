@@ -1,4 +1,5 @@
-import { DNAToCodon, DNA, BasePairToBinary } from './dna.js'
+import { DNAToCodon, DNA, BasePairToBinary, Codon } from './dna.js'
+import { codonsToPdp8Text } from './pdp8.js'
 
 describe('DNA', function () {
   describe('DNA', function () {
